@@ -11,8 +11,8 @@
 <div class="search">
   <div class="search-bar">
     <%= form_for :search, url: search_index_path, method: :post do |f| %>
-    <%= f.text_field :q, placeholder: "Enter Key Word", class: "search-box" %>
-    <%= f.submit "Search", class: "search-button" %>
+      <%= f.text_field :q, placeholder: "Enter Key Word", class: "search-box" %>
+      <%= f.submit "Search", class: "search-button" %>
     <% end %>
   </div>
 </div>

@@ -15,6 +15,8 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
 gem "figaro"
+gem "httparty"
+gem "faker"
 
 group :development, :test do
   gem 'byebug', platform: :mri
