@@ -10,7 +10,7 @@
   <h2>Past Searches</h2>
   <% if @searches %>
     <% @searches.each do |search| %>
-      <p>Key Word: <%= search.keyword %>Search Count: <%= search.count %></p> 
+      <p>Key Word: <%= search.keyword %><br> Search Count: <%= search.count %></p>
     <% end %>
   <% end %>
 </div>

@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
   def index
+    @searches = Search.all
     render :index
   end
 
