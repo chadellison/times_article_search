@@ -4,8 +4,6 @@
 
 <div class="past-searches">
   <h2>Past Searches</h2>
-  <ul>
-  </ul>
 </div>
 
 <div class="search">
@@ -15,4 +13,16 @@
       <%= f.submit "Search", class: "search-button" %>
     <% end %>
   </div>
+</div>
+
+<div class="results">
+  <% if @articles %>
+    <% @articles.each do |article| %>
+      <h3><%= article.headline %></h3>
+      <%= link_to "Link", article.link %>
+      <p>Lead Paragraph: <%= article.lead_paragraph %></p>
+      <p>Article Type: <%= article.article_type %></p>
+      <p>Word Count: <%= article.word_count %></p>
+    <% end %>
+  <% end %>
 </div>
