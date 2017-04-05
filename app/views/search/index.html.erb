@@ -1,14 +1,18 @@
-<h2>Welcome to the Times Article Search</h2>
-<p>Search by keyword on New York Times articles dating as far back as 1851</p>
-<div class="">
+<h2 class="title">Welcome to the Times Article Search</h2>
+
+<p class="description">Search by keyword on New York Times articles dating as far back as 1851</p>
+
+<div class="past-searches">
   <h2>Past Searches</h2>
   <ul>
   </ul>
 </div>
 
 <div class="search">
-  <%= form_for :search, url: search_index_path, method: :post do |f| %>
-    <%= f.text_field :q, placeholder: "Enter Key Word" %>
-    <%= f.submit "Search" %>
-  <% end %>
+  <div class="search-bar">
+    <%= form_for :search, url: search_index_path, method: :post do |f| %>
+    <%= f.text_field :q, placeholder: "Enter Key Word", class: "search-box" %>
+    <%= f.submit "Search", class: "search-button" %>
+    <% end %>
+  </div>
 </div>
