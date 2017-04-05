@@ -9,9 +9,47 @@ RSpec.describe SearchController, type: :controller do
   end
 
   describe "post" do
-    it "returns a 200 status" do
-      post :index
-      expect(response.status).to eq 200
+    context "with a successful search" do
+      let(:key_word) { Faker::Name.name }
+      let(:url) { Faker::Internet.url }
+      let(:paragraph) { Faker::Lorem.paragraph }
+      let(:key_words) { { "keywords" => [ { "name" => key_word } ] } }
+
+      let(:api_data) {
+        [
+          {
+            "web_url" => url,
+            "lead_paragraph" => paragraph,
+            "key_words" => key_words,
+            "pub_date" => "2017-03-29T00:00:02+0000",
+            "type_of_material" => "News",
+            "word_count" => "104",
+            "headline" => { "print_headline" => paragraph }
+          }.deep_symbolize_keys
+        ]
+      }
+
+      it "returns a 200 status" do
+        allow(ArticleService).to receive(:search).with(key_word)
+          .and_return(api_data)
+
+        post :create, params: { search: { q: key_word } }
+        expect(response.status).to eq 200
+      end
+    end
+
+    context "with an unsuccessful search" do
+      let(:key_word) { Faker::Name.name }
+      let(:error_data) { { errors: "This is an error" } }
+
+      it "renders an error message and redirects to the root path" do
+        allow(ArticleService).to receive(:search).with(key_word)
+          .and_return(error_data)
+
+        post :create, params: { search: { q: key_word } }
+        expect(flash[:errors]).to eq "This is an error"
+        expect(response.status).to eq 302
+      end
     end
   end
 end
