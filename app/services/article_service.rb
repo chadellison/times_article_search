@@ -2,9 +2,14 @@ class ArticleService
   include HTTParty
 
   def self.search(key_word)
-    # handle errors
-    HTTParty.get("#{base_uri}?q=#{key_word}&api-key=#{ENV["api_key"]}")
-      .deep_symbolize_keys[:response][:docs]
+    response = HTTParty.get("#{base_uri}?q=#{key_word}&api-key=#{ENV["api_key"]}")
+
+    if response["status"] == "OK"
+      response.deep_symbolize_keys[:response][:docs]
+    else
+      # handle errors
+      { errors: response.deep_symbolize_keys[:message] }
+    end
   end
 
   def self.base_uri
