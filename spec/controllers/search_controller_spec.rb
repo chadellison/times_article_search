@@ -1,14 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe SearchController, type: :controller do
-  describe "get" do
+  describe "index" do
     it "has a 200 status" do
       get :index
+
       expect(response.status).to eq 200
     end
   end
 
-  describe "post" do
+  describe "create" do
     context "with a successful search" do
       let(:key_word) { Faker::Name.name }
       let(:url) { Faker::Internet.url }
@@ -34,6 +35,7 @@ RSpec.describe SearchController, type: :controller do
           .and_return(api_data)
 
         post :create, params: { search: { q: key_word } }
+
         expect(response.status).to eq 200
       end
 
@@ -71,26 +73,28 @@ RSpec.describe SearchController, type: :controller do
       context "when the api call returns an error" do
         it "renders an error message and redirects to the root path" do
           allow(ArticleService).to receive(:search).with(key_word)
-          .and_return(error_data)
+            .and_return(error_data)
 
           post :create, params: { search: { q: key_word } }
+
           expect(flash[:errors]).to eq "This is an error"
           expect(response.status).to eq 302
         end
 
         it "does not change the search count" do
           allow(ArticleService).to receive(:search).with(key_word)
-          .and_return(error_data)
+            .and_return(error_data)
 
           expect(Search).not_to receive(:find_or_create_by)
           expect{ post :create, params: { search: { q: key_word } }}
-          .not_to change{ Search.count }
+            .not_to change{ Search.count }
         end
       end
 
-      context "when no key word is passed in" do
+      context "when no keyword is passed in" do
         it "flashes an error message and redirects to the root path" do
           post :create, params: { search: { q: "" } }
+
           expect(flash[:errors]).to eq "Please enter a keyword"
           expect(response.status).to eq 302
         end
