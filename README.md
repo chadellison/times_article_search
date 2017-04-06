@@ -5,8 +5,8 @@ into the search box and find articles with that keyword.
 
 The application is deployed [here](https://times-article-search.herokuapp.com/)
 
-##Project Description
-###Open API Keyword Search
+## Project Description
+### Open API Keyword Search
 
 Using Ruby on Rails and a public API of your choice, create a page where a public user can do a keyword search and view results. Include a sidebar that shows past searches anyone has done, with a count of how many times it has been run. Clicking on a past search should run it again.
 
@@ -16,7 +16,7 @@ This DOES NOT need user auth, clever Javascript or fancy styling. We’re intere
 
 Please do an initial commit after "rails new", and commit logical chunks of work along the way.  Share the repo on github, and publish to a free Heroku app so our dev team can use it without everyone installing it.
 
-###Test Suite
+### Test Suite
 The test suite can be run with `$rspec` from the root directory
 
 * Ruby version: 2.3.0
