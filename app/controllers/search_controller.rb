@@ -31,7 +31,7 @@ class SearchController < ApplicationController
     article_data = ArticleService.search(key_word[:q])
 
     if article_data.is_a?(Hash) && article_data[:errors].present?
-      flash.now[:errors] = article_data[:errors]
+      flash[:errors] = article_data[:errors]
       redirect_to root_path
     else
       @articles = Article.create(article_data)
