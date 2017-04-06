@@ -50,7 +50,7 @@ RSpec.describe SearchController, type: :controller do
       end
 
       context "when a search is on an old keyword" do
-        it "does not create a new search object; it increments the search object's count" do
+        it "increments that search object's count" do
           search = Search.create(keyword: "word", count: 1)
 
           allow(ArticleService).to receive(:search).with("word")
@@ -68,22 +68,32 @@ RSpec.describe SearchController, type: :controller do
       let(:key_word) { Faker::Name.name }
       let(:error_data) { { errors: "This is an error" } }
 
-      it "renders an error message and redirects to the root path" do
-        allow(ArticleService).to receive(:search).with(key_word)
+      context "when the api call returns an error" do
+        it "renders an error message and redirects to the root path" do
+          allow(ArticleService).to receive(:search).with(key_word)
           .and_return(error_data)
 
-        post :create, params: { search: { q: key_word } }
-        expect(flash[:errors]).to eq "This is an error"
-        expect(response.status).to eq 302
+          post :create, params: { search: { q: key_word } }
+          expect(flash[:errors]).to eq "This is an error"
+          expect(response.status).to eq 302
+        end
+
+        it "does not change the search count" do
+          allow(ArticleService).to receive(:search).with(key_word)
+          .and_return(error_data)
+
+          expect(Search).not_to receive(:find_or_create_by)
+          expect{ post :create, params: { search: { q: key_word } }}
+          .not_to change{ Search.count }
+        end
       end
 
-      it "does not change the search count" do
-        allow(ArticleService).to receive(:search).with(key_word)
-          .and_return(error_data)
-
-        expect(Search).not_to receive(:find_or_create_by)
-        expect{ post :create, params: { search: { q: key_word } }}
-          .not_to change{ Search.count }
+      context "when no key word is passed in" do
+        it "flashes an error message and redirects to the root path" do
+          post :create, params: { search: { q: "" } }
+          expect(flash[:errors]).to eq "Please enter a keyword"
+          expect(response.status).to eq 302
+        end
       end
     end
   end
