@@ -8,7 +8,7 @@ describe "article" do
   let(:count) { Faker::Number.number(3) }
   let(:properties) {
     {
-      headline: { print_headline: headline },
+      headline: { main: headline },
       web_url: url,
       lead_paragraph: paragraph,
       type_of_material: "News",

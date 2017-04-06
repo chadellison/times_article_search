@@ -2,7 +2,7 @@ class Article
   attr_reader :headline, :link, :article_type, :word_count, :lead_paragraph
 
   def initialize(properties = {})
-    @headline = properties[:headline][:print_headline]
+    @headline = properties[:headline][:main]
     @link = properties[:web_url]
     @lead_paragraph = properties[:lead_paragraph]
     @article_type = properties[:type_of_material]
