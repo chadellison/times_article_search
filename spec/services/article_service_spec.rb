@@ -18,18 +18,19 @@ describe ArticleService do
               "key_words" => key_words,
               "pub_date" => "2017-03-29T00:00:02+0000",
               "type_of_material" => "News",
-              "word_count" => "104"
+              "word_count" => Faker::Number.number(3),
+              "headline" => { "main" => Faker::Name.name }
             ]
           }
         }
       }
 
-      it "calls get on httparty with the passed in key word" do
+      it "calls get on HTTParty with the passed in key word and api key" do
         search_word = Faker::Name.name
-
         base_uri = "https://api.nytimes.com/svc/search/v2/articlesearch.json?"
         key_word = "q=#{search_word}"
-        api_key = nil
+        api_key = Faker::Number.number(12)
+        ENV["api_key"] = api_key
 
         expect(HTTParty).to receive(:get).with(base_uri + key_word + "&api-key=#{api_key}")
           .and_return(api_data)
@@ -38,13 +39,14 @@ describe ArticleService do
       end
     end
 
-    context "with unsuccessful response" do
+    context "with an unsuccessful response" do
       let(:error_message) { { "message" => "Invalid authentication credentials" } }
-      let(:key_word) { Faker::Name.name}
+      let(:key_word) { Faker::Name.name }
 
       it "returns an errors hash" do
         result = { errors: "Invalid authentication credentials" }
         allow(HTTParty).to receive(:get).and_return error_message
+
         expect(ArticleService.search(key_word)).to eq result
       end
     end

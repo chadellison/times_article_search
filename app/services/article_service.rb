@@ -1,6 +1,4 @@
 class ArticleService
-  include HTTParty
-
   def self.search(key_word)
     response = HTTParty.get("#{base_uri}?q=#{key_word}&api-key=#{ENV["api_key"]}")
 

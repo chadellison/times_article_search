@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "article" do
+describe Article do
   let(:headline) { Faker::Lorem.paragraph }
   let(:url) { Faker::Internet.url }
   let(:paragraph) { Faker::Lorem.paragraph }
@@ -29,7 +29,7 @@ describe "article" do
   end
 
   describe "create" do
-    it "returns an array of articles" do
+    it "returns an array of article objects" do
       result = Article.create([properties, properties, properties])
       expect(result.class).to eq Array
       expect(result.all? { |article| article.class == Article }).to be true

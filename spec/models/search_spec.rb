@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Search, type: :model do
+describe Search do
   it "validates the presence of a keyword" do
     search = Search.new
     expect(search.valid?).to be false
