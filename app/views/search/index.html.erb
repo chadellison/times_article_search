@@ -36,11 +36,11 @@
     <h2>Search Results</h2>
     <% if @articles %>
       <% @articles.each do |article| %>
-        <h3><%= article.headline %></h3>
-        <%= link_to "Check out the Article", article.link, class: "link" %>
-        <p>Lead Paragraph: <%= article.lead_paragraph %></p>
+        <h3>Headline: <%= article.headline %></h3>
+        <p>Lead Paragraph: <i><%= article.lead_paragraph %></i></p>
         <p>Article Type: <%= article.article_type %></p>
         <p>Word Count: <%= article.word_count %></p>
+        <%= link_to "Check out the Article", article.link, class: "link" %>
       <% end %>
     <% end %>
   </div>
